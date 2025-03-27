@@ -9,7 +9,7 @@ interface ToggleCardProps {
     onClick?: () => void
 }
 
-// TODO Work on the selected mode and hover mode
+
 const ToggleCard = ({icon, title, subtitle, className, onClick}: ToggleCardProps) => {
     return (
         <div onClick={onClick} className={

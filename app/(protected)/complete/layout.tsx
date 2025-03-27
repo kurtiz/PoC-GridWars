@@ -17,7 +17,7 @@ export default async function Layout({children}: { children: ReactNode; }) {
                 particleColor="#3fff0c"
                 speed={0.5}
             />
-            {/* TODO show client and ask which they prefer */}
+
             <LetterGlitch
                 glitchColors={["#000000", "#3fff0c", "#1673ff"]}
                 glitchSpeed={50}

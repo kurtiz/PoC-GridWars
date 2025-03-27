@@ -3,6 +3,7 @@ import {Shield, Users} from 'lucide-react'
 import CircleSketch from "@/components/svg-components/circle-sketch";
 import FingerprintScan from "@/components/svg-components/fingerprint-scan";
 import InternetSpeedGraph from "@/components/svg-components/internet-speed-graph";
+import Image from "next/image";
 
 export default function FeaturesSection() {
     return (
@@ -111,15 +112,21 @@ export default function FeaturesSection() {
                                             <span
                                                 className="block h-fit rounded border px-2 py-1 text-xs shadow-sm">Likeur</span>
                                             <div className="ring-background size-7 ring-4">
-                                                <img className="size-full rounded-full"
-                                                     src="https://avatars.githubusercontent.com/u/102558960?v=4"
-                                                     alt=""/>
+                                                <Image
+                                                    className="size-full rounded-full"
+                                                    src="https://avatars.githubusercontent.com/u/102558960?v=4"
+                                                    alt=""
+                                                    height="100" width="100"
+                                                />
                                             </div>
                                         </div>
                                         <div className="relative ml-[calc(50%-1rem)] flex items-center gap-2">
                                             <div className="ring-background size-8 ring-4">
-                                                <img className="size-full rounded-full"
-                                                     src="https://avatars.githubusercontent.com/u/47919550?v=4" alt=""/>
+                                                <Image
+                                                    className="size-full rounded-full"
+                                                    src="https://avatars.githubusercontent.com/u/47919550?v=4" alt=""
+                                                    height="100" width="100"
+                                                />
                                             </div>
                                             <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm">M. Irung</span>
                                         </div>
@@ -127,8 +134,12 @@ export default function FeaturesSection() {
                                             className="relative flex w-[calc(50%+0.875rem)] items-center justify-end gap-2">
                                             <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm">B. Ng</span>
                                             <div className="ring-background size-7 ring-4">
-                                                <img className="size-full rounded-full"
-                                                     src="https://avatars.githubusercontent.com/u/31113941?v=4" alt=""/>
+                                                <Image
+                                                    className="size-full rounded-full"
+                                                    src="https://avatars.githubusercontent.com/u/31113941?v=4"
+                                                    alt=""
+                                                    height="100" width="100"
+                                                />
                                             </div>
                                         </div>
                                     </div>
