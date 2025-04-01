@@ -2,7 +2,7 @@ import {createServerClient} from "@supabase/ssr";
 import {type NextRequest, NextResponse} from "next/server";
 
 // List of protected paths that require user registration to access
-const protectedPaths = ['/dashboard', '/profile', '/settings']; // add more paths as needed
+const protectedPaths = ['/dashboard', '/account', '/settings',]; // add more paths as needed
 
 export const updateSession = async (request: NextRequest) => {
     try {
