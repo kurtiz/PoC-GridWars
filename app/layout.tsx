@@ -26,10 +26,10 @@ export default function RootLayout({children}: Readonly<{ children: ReactNode; }
         <html lang="en" className={poppins.className} suppressHydrationWarning>
         <head>
             {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-            <script
+            {/*<script
                 crossOrigin="anonymous"
                 src="//unpkg.com/react-scan/dist/auto.global.js"
-            />
+            />*/}
         </head>
         <body className="bg-background text-foreground">
         <ThemeProvider

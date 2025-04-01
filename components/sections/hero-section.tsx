@@ -21,7 +21,7 @@ export default function HeroSection() {
                         <div className="flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
                             <div className="flex w-full justify-between lg:w-auto">
                                 <Link href="/public" aria-label="home" className="flex items-center space-x-2 gap-2">
-                                    <Logo/> 00 Sec App
+                                    <Logo/> Grid Wars
                                 </Link>
 
                                 <button onClick={() => setMenuState(!menuState)}
@@ -76,15 +76,15 @@ export default function HeroSection() {
                     <div className="relative pt-24">
                         <div className="mx-auto max-w-7xl px-6">
                             <div className="max-w-3xl text-center sm:mx-auto lg:mr-auto lg:mt-0 lg:w-4/5">
-                                <Link href="/public"
-                                      className="rounded-(--radius) mx-auto flex w-fit items-center gap-2 border p-1 pr-3 motion-preset-blur-up-lg">
+                                <div
+                                    className="rounded-(--radius) cursor-pointer mx-auto flex w-fit items-center gap-2 border p-1 pr-3 motion-preset-blur-up-lg">
                                     <span
                                         className="bg-muted rounded-[calc(var(--radius)-0.25rem)] px-2 py-1 text-xs">New</span>
                                     <span className="text-sm">Introduction</span>
                                     <span className="bg-(--color-border) block h-4 w-px"></span>
 
                                     <ArrowDown className="size-4"/>
-                                </Link>
+                                </div>
 
                                 <h1 className="mt-8 text-balance text-4xl font-semibold md:text-5xl xl:text-6xl xl:[line-height:1.125] motion-preset-blur-up-lg motion-delay-100">
                                     Unleash Your Cyber Skills: Red vs. Blue
