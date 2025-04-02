@@ -80,7 +80,7 @@ const Account = () => {
                                         </div>
                                     </div>
                                     {/* Vertical Divider */}
-                                    <div className="h-32 border-l border-muted mx-4 hidden md:block"/>
+                                    <div className="h-32 border-l border-accent-foreground mx-4 hidden md:block"/>
                                 </div>
 
                                 {/* Cyber Team */}
@@ -143,12 +143,12 @@ const Account = () => {
                                         </div>
                                     </div>
                                     {/* Vertical Divider */}
-                                    <div className="h-32 border-l border-muted mx-4 hidden md:block"/>
+                                    <div className="h-32 border-l border-accent-foreground mx-4 hidden md:block"/>
                                 </div>
 
                                 {/* Cyber Team */}
                                 <div
-                                    className="border border-gray-200 dark:border-gray-600 px-4 py-2 rounded-md flex-1 md:w-[30%]">
+                                    className="border border-accent px-4 py-2 rounded-md flex-1 md:w-[30%]">
                                     <div className="flex gap-2 items-center">
                                         <div className="flex flex-col">
                                             <Image
@@ -175,7 +175,7 @@ const Account = () => {
 
                                 {/* Company Bio */}
                                 <div
-                                    className="border border-gray-200 dark:border-gray-600 px-4 py-2 rounded-md flex-1 md:w-[30%]">
+                                    className="border border-accent px-4 py-2 rounded-md flex-1 md:w-[30%]">
                                     <div className="flex gap-2 items-center">
                                         <div className="flex flex-col">
                                             <Image

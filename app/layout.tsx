@@ -1,4 +1,3 @@
-import {Poppins} from "next/font/google";
 import {ThemeProvider} from "next-themes";
 import "./globals.css";
 import {ReactNode} from "react";
@@ -14,16 +13,16 @@ export const metadata = {
     description: "Hacker Corp",
 };
 
-const poppins = Poppins({
-    subsets: ["latin"],
-    weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-    style: ["normal", "italic"],
-    display: "swap"
-});
+// const poppins = Poppins({
+//     subsets: ["latin"],
+//     weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+//     style: ["normal", "italic"],
+//     display: "swap"
+// });
 
 export default function RootLayout({children}: Readonly<{ children: ReactNode; }>) {
     return (
-        <html lang="en" className={poppins.className} suppressHydrationWarning>
+        <html lang="en" suppressHydrationWarning>
         <head>
             {/* eslint-disable-next-line @next/next/no-sync-scripts */}
             {/*<script
