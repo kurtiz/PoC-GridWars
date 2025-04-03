@@ -2,6 +2,7 @@ import {ThemeProvider} from "next-themes";
 import "./globals.css";
 import {ReactNode} from "react";
 import QueryProvider from "@/components/data-provider/query-provider";
+import {ReactScan} from "@/components/dev/react-scan";
 
 const defaultUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
@@ -13,23 +14,10 @@ export const metadata = {
     description: "Hacker Corp",
 };
 
-// const poppins = Poppins({
-//     subsets: ["latin"],
-//     weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-//     style: ["normal", "italic"],
-//     display: "swap"
-// });
-
 export default function RootLayout({children}: Readonly<{ children: ReactNode; }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-        <head>
-            {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-            {/*<script
-                crossOrigin="anonymous"
-                src="//unpkg.com/react-scan/dist/auto.global.js"
-            />*/}
-        </head>
+        <ReactScan/>
         <body className="bg-background text-foreground">
         <ThemeProvider
             attribute="class"

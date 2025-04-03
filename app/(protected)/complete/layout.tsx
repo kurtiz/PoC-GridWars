@@ -19,7 +19,7 @@ export default async function Layout({children}: { children: ReactNode; }) {
             />
 
             <LetterGlitch
-                glitchColors={["#000000", "#3fff0c", "#1673ff"]}
+                glitchColors={["#213d21", "#45e8e8", "#1673ff"]}
                 glitchSpeed={50}
                 centerVignette={false}
                 outerVignette={false}

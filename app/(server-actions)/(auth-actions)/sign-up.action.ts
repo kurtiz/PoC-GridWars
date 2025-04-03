@@ -1,14 +1,15 @@
 "use server";
 
 import {createClient} from "@/utils/supabase/server";
-import {headers} from "next/headers";
 import {encodedRedirect} from "@/utils/utils";
 
 export const signUpAction = async (formData: FormData) => {
     const email = formData.get("email")?.toString();
     const password = formData.get("password")?.toString();
     const supabase = await createClient();
-    const origin = (await headers()).get("origin");
+    const origin = process.env.NODE_ENV === "development" ? "http://localhost:3000" : process.env.NEXT_PRODUCTION_URL;
+
+    console.log({origin}, {environment: process.env.NODE_ENV});
 
     if (!email || !password) {
         return encodedRedirect(
