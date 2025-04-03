@@ -7,7 +7,8 @@ export const signUpAction = async (formData: FormData) => {
     const email = formData.get("email")?.toString();
     const password = formData.get("password")?.toString();
     const supabase = await createClient();
-    const origin = process.env.NODE_ENV === "development" ? "http://localhost:3000" : process.env.NEXT_PRODUCTION_URL;
+    const origin = process.env.NODE_ENV === "development" ?
+        "http://localhost:3000" : `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` || process.env.NEXT_PRODUCTION_URL;
 
     console.log({origin}, {environment: process.env.NODE_ENV});
 

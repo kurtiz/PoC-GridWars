@@ -27,6 +27,8 @@ const Account = () => {
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [selectedSpecialization, setSelectedSpecialization] = useState<string | null>(null);
 
+    const [isDisabled, setIsDisabled] = useState(true);
+
     // Fetch teams using useQuery with explicit typing
     const {data: teams, isLoading, isError} = useQuery<GetTeamsListResponse>({
         queryKey: ["teams"],
@@ -59,6 +61,11 @@ const Account = () => {
 
     // Find the currently selected team
     const selectedTeam = teams?.teams.find((team) => team.id === selectedId);
+
+    // function to toggle canEdit state
+    const toggleCanEdit = () => {
+        setIsDisabled(!isDisabled);
+    };
 
     return (
         <div className="flex flex-1 flex-col px-4 md:px-8">
@@ -135,9 +142,9 @@ const Account = () => {
                                         </div>
                                         <div className="flex flex-col text-left text-sm leading-tight">
                                             <span
-                                                className="truncate font-semibold text-2xl">{userData?.user_name}</span>
+                                                className="truncate font-semibold text-2xl">{userData?.user_alias}</span>
                                             <span
-                                                className="truncate text-muted-foreground font-medium">@{userData?.user_alias}</span>
+                                                className="truncate text-muted-foreground font-medium">@{userData?.user_name}</span>
                                             <span
                                                 className="text-muted-foreground truncate text-xs">{userData?.email}</span>
                                         </div>
@@ -220,14 +227,14 @@ const Account = () => {
                                         <div className="flex flex-col w-full md:w-1/2 gap-2">
                                             <Label htmlFor="username">Username</Label>
                                             <Input name="username" placeholder="eg. hacker_24" required
-                                                   value={userData?.user_name} disabled/>
+                                                   value={userData?.user_name} disabled={isDisabled}/>
                                         </div>
 
                                         {/* Alias Field */}
                                         <div className="flex flex-col w-full md:w-1/2 gap-2">
                                             <Label htmlFor="alias">Alias</Label>
                                             <Input name="alias" placeholder="eg. John Doe" required
-                                                   value={userData?.user_alias} disabled/>
+                                                   value={userData?.user_alias} disabled={isDisabled}/>
                                         </div>
                                     </div>
                                 </div>
@@ -238,7 +245,7 @@ const Account = () => {
                                         <Label htmlFor="selectedTeam">Team</Label>
                                         {
                                             isLoading ? (
-                                                <div className="flex justify-around gap-2 items-center">
+                                                <div className="flex gap-8 items-center">
                                                     <Skeleton className="w-[140px] h-[132px] rounded-md"/>
                                                     <Skeleton className="w-[140px] h-[132px] rounded-md"/>
                                                 </div>
@@ -282,11 +289,13 @@ const Account = () => {
                                                                     "cursor-pointer"
                                                                 )}
                                                                 onClick={() => {
-                                                                    setSelectedId(team.id);
-                                                                    if (team.has_specialization && team.specializations?.length > 0) {
-                                                                        setSelectedSpecialization(team.specializations[0].id);
-                                                                    } else {
-                                                                        setSelectedSpecialization(null);
+                                                                    if (!isDisabled) {
+                                                                        setSelectedId(team.id);
+                                                                        if (team.has_specialization && team.specializations?.length > 0) {
+                                                                            setSelectedSpecialization(team.specializations[0].id);
+                                                                        } else {
+                                                                            setSelectedSpecialization(null);
+                                                                        }
                                                                     }
                                                                 }}
                                                             />
@@ -307,6 +316,7 @@ const Account = () => {
                                                 value={selectedSpecialization ?? ""}
                                                 onValueChange={setSelectedSpecialization}
                                                 defaultValue={selectedTeam?.specializations[0]?.id ?? ""}
+                                                disabled={isDisabled}
                                             >
                                                 <SelectTrigger className="w-full">
                                                     <SelectValue placeholder="Specialization"/>
@@ -327,7 +337,13 @@ const Account = () => {
                                 </div>
 
                                 {/* Submit Button */}
-                                <div className="mt-4">
+                                <div className="mt-4 flex gap-4 items-center">
+                                    <Button variant={!isDisabled ? "destructive" : "secondary"} type="button"
+                                            onClick={toggleCanEdit}>
+                                        {
+                                            !isDisabled ? "Cancel" : "Edit"
+                                        }
+                                    </Button>
                                     <Button>
                                         Update Profile
                                     </Button>
