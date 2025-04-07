@@ -173,9 +173,10 @@ const MapComponent = () => {
 
             {selectedCompany && (
                 <div
-                    className="absolute bottom-6 left-1/2 bg-background -translate-x-1/2 p-4 rounded-xl shadow-xl max-h-40 max-w-96 z-10">
+                    className="absolute bottom-6 left-1/2 bg-background -translate-x-1/2 p-4 rounded-xl shadow-xl md:max-h-40 max-w-96 z-10">
                     <div className="flex justify-between items-center">
-                        <Link href={`/company/${selectedCompany.id}`} className="text-lg font-black hover:underline">
+                        <Link href={`/company/${selectedCompany.id}`}
+                              className="text-lg font-black hover:underline truncate">
                             {selectedCompany.name}
                         </Link>
                         <Button
