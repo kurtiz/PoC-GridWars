@@ -6,52 +6,12 @@ import {GLTFLoader} from 'three-stdlib';
 import {Button} from "@/components/ui/button";
 import {Card, CardContent} from "@/components/ui/card";
 import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/custom-sheet";
-
-type ModelInfo = {
-    id: string;
-    name: string;
-    coords: [number, number];
-    gltfPath: string;
-};
-
-const modelDetails: ModelInfo[] = [
-    {
-        id: 'company-1',
-        name: 'Sky Tower 1',
-        coords: [-0.1940, 5.5600],
-        gltfPath: '/3d/34M_17/34M_17.gltf'
-    },
-    {
-        id: 'company-2',
-        name: 'East Heights',
-        coords: [-0.1860, 5.5640],
-        gltfPath: '/3d/sky-scraper-1/sky-scraper-1.gltf'
-    },
-    {
-        id: 'company-3',
-        name: 'Demo GLTF',
-        coords: [-0.1885, 5.5635],
-        gltfPath: '/3d/34M_17/34M_17.gltf'
-    },
-    {
-        id: 'company-4',
-        name: 'West Point',
-        coords: [-0.1910, 5.5610],
-        gltfPath: '/3d/sky-scraper-1/sky-scraper-1.gltf'
-    },
-    {
-        id: 'company-5',
-        name: 'Capital Plaza',
-        coords: [-0.1895, 5.5625],
-        gltfPath: '/3d/34M_17/34M_17.gltf'
-    },
-    {
-        id: 'company-6',
-        name: 'North Tower',
-        coords: [-0.1920, 5.5630],
-        gltfPath: '/3d/sky-scraper-2/sky-scraper-2.gltf'
-    },
-];
+import {Company} from "@/types/company.types";
+import {companies} from "@/repository/companies";
+import {SheetTitle} from "@/components/ui/sheet";
+import {X} from 'lucide-react';
+import {truncateText} from "@/utils/truncate-text";
+import Link from "next/link";
 
 const MapComponent = () => {
     const mapContainer = useRef<HTMLDivElement>(null);
@@ -60,7 +20,7 @@ const MapComponent = () => {
     const scene = useRef<THREE.Scene | null>(null);
     const camera = useRef<THREE.Camera | null>(null);
     const modelsRef = useRef<{ [key: string]: THREE.Group }>({});
-    const [selectedBuilding, setSelectedBuilding] = useState<ModelInfo | null>(null);
+    const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
 
     useEffect(() => {
         if (!mapContainer.current) return;
@@ -76,7 +36,7 @@ const MapComponent = () => {
             attributionControl: false,
         });
 
-        const createCustomLayer = (model: ModelInfo, modelTransform: {
+        const createCustomLayer = (model: Company, modelTransform: {
             translateX: number;
             translateY: number;
             translateZ: number | undefined;
@@ -92,9 +52,12 @@ const MapComponent = () => {
                 camera.current = new THREE.Camera();
                 scene.current = new THREE.Scene();
 
-                const light = new THREE.DirectionalLight(0xffffff, 1);
+                const light = new THREE.DirectionalLight(0xffffff, 2);
+                const light2 = new THREE.DirectionalLight(0xffffff, 1);
                 light.position.set(0, -70, 100).normalize();
+                light2.position.set(0, 70, 100).normalize();
                 scene.current.add(light);
+                scene.current.add(light2);
 
                 const loader = new GLTFLoader();
                 loader.load(model.gltfPath, (gltf) => {
@@ -126,7 +89,7 @@ const MapComponent = () => {
         });
 
         map.current.on('style.load', () => {
-            modelDetails.map((model) => {
+            companies.map((model) => {
                 const mercCoords = MercatorCoordinate.fromLngLat(model.coords, 0);
                 const modelTransform = {
                     translateX: mercCoords.x,
@@ -148,8 +111,7 @@ const MapComponent = () => {
         };
     }, []);
 
-    const flyToBuilding = (model: ModelInfo) => {
-        console.log("model-id", model.id)
+    const flyToBuilding = (model: Company) => {
         map.current?.flyTo({
             center: [model.coords[0], model.coords[1]],
             zoom: 17,
@@ -159,25 +121,25 @@ const MapComponent = () => {
         });
 
         // Highlight the selected building
-        Object.values(modelsRef.current).forEach((modelObj) => {
-            modelObj.traverse((child) => {
-                if ((child as THREE.Mesh).isMesh) {
-                    ((child as THREE.Mesh).material as THREE.MeshStandardMaterial).color.set(0xffffff); // Reset color
-                }
-            });
-        });
+        // Object.values(modelsRef.current).forEach((modelObj) => {
+        //     modelObj.traverse((child) => {
+        //         if ((child as THREE.Mesh).isMesh) {
+        //             ((child as THREE.Mesh).material as THREE.MeshStandardMaterial).color.set(0xffffff); // Reset color
+        //         }
+        //     });
+        // });
 
-        const selectedObj = modelsRef.current[model.id];
+        // const selectedObj = modelsRef.current[model.id];
 
-        if (selectedObj) {
-            selectedObj.traverse((child) => {
-                if ((child as THREE.Mesh).isMesh) {
-                    ((child as THREE.Mesh).material as THREE.MeshStandardMaterial).color.set(0xff0000); // Highlight red
-                }
-            });
-        }
+        // if (selectedObj) {
+        //     selectedObj.traverse((child) => {
+        //         if ((child as THREE.Mesh).isMesh) {
+        //             ((child as THREE.Mesh).material as THREE.MeshStandardMaterial).color.set(0xff0000); // Highlight red
+        //         }
+        //     });
+        // }
 
-        setSelectedBuilding(model);
+        setSelectedCompany(model);
     };
 
     return (
@@ -188,29 +150,44 @@ const MapComponent = () => {
                 <SheetTrigger asChild>
                     <Button className="absolute top-4 left-4 z-10">Company Legend</Button>
                 </SheetTrigger>
+
                 <SheetContent side="left" className="w-80 p-4">
-                    <h2 className="text-xl font-bold mb-4">Companies</h2>
-                    {modelDetails.map((model) => (
-                        <Card key={model.id} className="mb-3 cursor-pointer hover:shadow-lg"
-                              onClick={() => {
-                                  flyToBuilding(model)
-                                  console.log(model);
-                              }}
-                        >
-                            <CardContent className="p-4">
-                                <p className="font-medium">{model.name}</p>
-                            </CardContent>
-                        </Card>
-                    ))}
+                    <SheetTitle className="text-xl font-bold mb-2 sticky">
+                        Companies
+                    </SheetTitle>
+                    <div className="overflow-auto">
+                        {companies.map((model) => (
+                            <Card key={model.id} className="mb-3 cursor-pointer hover:shadow-lg"
+                                  onClick={() => {
+                                      flyToBuilding(model)
+                                  }}
+                            >
+                                <CardContent className="p-4">
+                                    <p className="font-medium">{model.name}</p>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
                 </SheetContent>
             </Sheet>
 
-            {selectedBuilding && (
+            {selectedCompany && (
                 <div
-                    className="absolute bottom-6 left-1/2 bg-background -translate-x-1/2 p-4 rounded-xl shadow-xl w-96 z-10">
-                    <h3 className="text-lg font-bold">{selectedBuilding.name}</h3>
-                    <p>Location: {selectedBuilding.coords[1]}, {selectedBuilding.coords[0]}</p>
-                    <p>Company info or description goes here...</p>
+                    className="absolute bottom-6 left-1/2 bg-background -translate-x-1/2 p-4 rounded-xl shadow-xl max-h-40 max-w-96 z-10">
+                    <div className="flex justify-between items-center">
+                        <Link href={`/company/${selectedCompany.id}`} className="text-lg font-black hover:underline">
+                            {selectedCompany.name}
+                        </Link>
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setSelectedCompany(null)}>
+                            <X className="w-4 h-4"/>
+                        </Button>
+                    </div>
+                    <div className="text-sm text-muted-foreground/85">
+                        {truncateText(selectedCompany.description, 100)}
+                    </div>
                 </div>
             )}
         </div>
