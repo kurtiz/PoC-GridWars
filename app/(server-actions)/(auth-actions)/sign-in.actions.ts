@@ -25,5 +25,5 @@ export const signInAction = async (formData: FormData) => {
 
     if (!registration_completed.data) return redirect("/dashboard/complete/profile");
 
-    return redirect("/dashboard");
+    return redirect("/map");
 };

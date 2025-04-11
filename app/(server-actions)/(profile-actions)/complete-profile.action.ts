@@ -29,6 +29,6 @@ export const completeProfile = async (formData: FormData) => {
         throw new Error("Failed to complete profile");
     }
 
-    return redirect(`${origin}/dashboard`);
+    return redirect(`${origin}/map`);
 
 };
