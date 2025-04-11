@@ -127,7 +127,7 @@ const Account = () => {
                         ) : (
                             <div className="flex flex-1 gap-4 items-center flex-wrap">
                                 {/* User Avatar */}
-                                <div className="flex gap-4 items-center flex-col md:flex-row">
+                                <div className="flex gap-4 items-center flex-col lg:flex-row">
                                     <div className="flex gap-2 items-center">
                                         <div className="flex flex-col">
                                             <Avatar className="h-32 w-32 rounded-lg">
@@ -150,7 +150,7 @@ const Account = () => {
                                         </div>
                                     </div>
                                     {/* Vertical Divider */}
-                                    <div className="h-32 border-l border-accent-foreground mx-4 hidden md:block"/>
+                                    <div className="h-32 border-l border-accent-foreground mx-4 hidden lg:block"/>
                                 </div>
 
                                 {/* Cyber Team */}
@@ -160,7 +160,11 @@ const Account = () => {
                                         <div className="flex flex-col">
                                             <Image
                                                 className="rounded-md"
-                                                src={"/img/cyber_teams/blue-team.png"}
+                                                src={
+                                                    userData?.cyber_team?.team_name === "Red Team" ?
+                                                        "/img/cyber_teams/red-team.png" :
+                                                        "/img/cyber_teams/blue-team.png"
+                                                }
                                                 alt="Team"
                                                 width={100}
                                                 height={100}
